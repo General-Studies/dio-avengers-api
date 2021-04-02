@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: avengers
+  config:
+    # This configuration allow use profiles as spring 2.3.x version
+    # In spring 2.4.x version, has changed to:
+    # spring:
+    #  profiles:
+    #    group:
+    #      <group>: dev, auth
+    use-legacy-processing: true
+  profiles:
+    active: dev
+  jmx:
+    enabled: false
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.generate_statistics: false
+      hibernate.jdbc.batch_size: 25
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+      hibernate.query.fail_on_pagination_over_collection_fetch: true
+      hibernate.query.in_clause_parameter_padding: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+  main:
+    allow-bean-definition-overriding: true
+  task:
+    execution:
+      thread-name-prefix: avengers-task-
+      pool:
+        core-size: 2
+        max-size: 50
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: avengers-scheduling-
+      pool:
+        size: 2
+  output:
+    ansi:
+      console-available: true
+
+server:
+  port: 9090
+  servlet:
+    session:
+      cookie:
+        http-only: true
+    context-path: /avengers
