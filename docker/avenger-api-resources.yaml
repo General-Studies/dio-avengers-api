@@ -1,0 +1,33 @@
+version: '3.2'
+services:
+  postgres:
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    ports:
+      - "25433:5432"
+    volumes:
+      - pdb12:/var/lib/postgresql/data
+    networks:
+      - postgres-compose-network
+
+  pgadmin-avenger:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5556:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres-compose-network
+
+volumes:
+  pdb12:
+networks:
+  postgres-compose-network:
+    driver: bridge
