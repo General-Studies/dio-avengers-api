@@ -1,6 +1,6 @@
 version: '3.2'
 services:
-  postgres:
+  postgres-avenger:
     image: postgres:12-alpine
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -22,7 +22,7 @@ services:
     ports:
       - "5556:80"
     depends_on:
-      - postgres
+      - postgres-avenger
     networks:
       - postgres-compose-network
 
